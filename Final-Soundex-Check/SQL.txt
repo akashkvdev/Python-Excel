@@ -1,0 +1,161 @@
+In MySQL, RANK() and DENSE_RANK() are window functions used to assign ranks to rows within a partition of data. They are useful when you want to rank rows based on specific criteria, such as sorting rows by a particular column (e.g., scores, sales, or dates). Here's a simple breakdown:
+
+1. RANK()
+- What it does: Assigns a rank to each row within a result set. If there are rows with the same value (tie), the same rank is assigned to those rows, but the next rank will skip (i.e., there will be a gap).
+  
+ Example:
+Let's say you have a table of students with their scores:
+
+| Student | Score |
+|---------|-------|
+| John    | 95    |
+| Alice   | 95    |
+| Bob     | 90    |
+| David   | 85    |
+
+If you want to rank students based on their scores:
+
+sql
+SELECT Student, Score, RANK() OVER (ORDER BY Score DESC) AS Rank
+FROM students;
+
+
+Result:
+
+| Student | Score | Rank |
+|---------|-------|------|
+| John    | 95    | 1    |
+| Alice   | 95    | 1    |
+| Bob     | 90    | 3    |
+| David   | 85    | 4    |
+
+- Notice that both John and Alice got the same rank (1) because their scores are the same, but Bob gets rank 3 (it skips rank 2 due to the tie).
+
+ Use Case:
+- When to use RANK(): Use RANK() when you want to rank items with gaps for ties. This is useful in competition results, where if two people tie for 1st place, the next rank would be 3rd place, not 2nd.
+
+---
+
+2. DENSE_RANK()
+- What it does: Similar to RANK(), but the next rank is not skipped when there is a tie. It assigns consecutive ranks, regardless of ties.
+
+ Example:
+Using the same student scores example:
+
+sql
+SELECT Student, Score, DENSE_RANK() OVER (ORDER BY Score DESC) AS DenseRank
+FROM students;
+
+
+Result:
+
+| Student | Score | DenseRank |
+|---------|-------|-----------|
+| John    | 95    | 1         |
+| Alice   | 95    | 1         |
+| Bob     | 90    | 2         |
+| David   | 85    | 3         |
+
+- In this case, even though John and Alice tied, Bob gets rank 2, not 3, because there are no gaps in ranks.
+
+ Use Case:
+- When to use DENSE_RANK(): Use DENSE_RANK() when you want ranks without gaps, even when there are ties. This is useful when ranking needs to be continuous, such as for prizes or rewards, where skipping ranks might not make sense.
+
+---
+
+Summary of Differences:
+- RANK(): Skips ranks when there are ties (gaps in ranking).
+- DENSE_RANK(): No gaps in ranking even when there are ties.
+
+---
+
+Real-time Example:
+Suppose you're working in a sales company and want to rank salespersons based on their monthly sales:
+
+ Scenario 1 (using RANK()):
+You want to know the ranking of each salesperson, with ties leading to gaps in rank numbers. This helps when awarding top salespeople, as ties may lead to fewer winners for lower ranks.
+
+ Scenario 2 (using DENSE_RANK()):
+You want to assign different levels of rewards based on the rank without skipping levels. Even if some salespersons are tied, the next highest rank should continue without a gap.
+
+Here’s a breakdown of RANK(), DENSE_RANK(), and ROW_NUMBER() with a different example and their real-time uses, including explanations for when and why to use each.
+
+3. ROW_NUMBER()
+What it does:
+- Assigns a unique row number to each row, even if rows have identical values. There are no ties or gaps in ranking.
+
+Example:
+Using the same sales leaderboard, but this time we use ROW_NUMBER():
+
+sql
+SELECT Salesperson, Sales, ROW_NUMBER() OVER (ORDER BY Sales DESC) AS RowNum
+FROM sales_leaderboard;
+
+
+Result:
+
+| Salesperson | Sales | RowNum |
+|-------------|-------|--------|
+| Alex        | 5000  | 1      |
+| Bob         | 4000  | 2      |
+| Charlie     | 4000  | 3      |
+| Diana       | 3500  | 4      |
+
+Real-time Use Case:
+- Pagination in Reports: Suppose you're displaying salespeople in pages of 10 rows, and you want each row to have a unique identifier, even if some people have the same sales. ROW_NUMBER() is commonly used in pagination to assign a unique number to each row, regardless of ties in other columns.
+  
+- Order-Tracking Systems: In an online shopping system, each order gets a unique identifier based on the order of creation. ROW_NUMBER() is used to assign unique identifiers to each row.
+
+---
+
+Summary of Differences:
+
+| Function       | How it Ranks | Gaps in Ranking? | Handles Ties?      | Real-time Usage                            |
+|----------------|--------------|------------------|--------------------|--------------------------------------------|
+| RANK()     | Based on value | Yes (skips ranks after ties) | Yes (assigns the same rank) | Competitions, where ties lead to gaps in ranks |
+| DENSE_RANK() | Based on value | No (no gaps)       | Yes (assigns the same rank) | Sales levels or rewards, continuous ranking |
+| ROW_NUMBER() | Sequential (regardless of value) | No (no gaps)       | No (always unique)        | Pagination, unique row numbering |
+
+---
+
+Real-time Example for All Three in One Scenario:
+
+Let’s say you’re managing a shopping website with multiple products, and you want to show:
+
+1. The rank of products based on their sales.
+2. The dense rank to categorize products into sales levels.
+3. The row number to give each product a unique identifier for displaying in a table.
+
+Using the following products:
+
+| Product  | Sales |
+|----------|-------|
+| Laptop   | 100   |
+| Phone    | 80    |
+| Tablet   | 80    |
+| Headphone| 60    |
+
+Now, run the three window functions:
+
+sql
+SELECT Product, Sales,
+       RANK() OVER (ORDER BY Sales DESC) AS Rank,
+       DENSE_RANK() OVER (ORDER BY Sales DESC) AS DenseRank,
+       ROW_NUMBER() OVER (ORDER BY Sales DESC) AS RowNum
+FROM products;
+
+
+Result:
+
+| Product    | Sales | Rank | DenseRank | RowNum |
+|------------|-------|------|-----------|--------|
+| Laptop     | 100   | 1    | 1         | 1      |
+| Phone      | 80    | 2    | 2         | 2      |
+| Tablet     | 80    | 2    | 2         | 3      |
+| Headphone  | 60    | 4    | 3         | 4      |
+
+Explanation:
+- Rank: Laptop is ranked 1st, Phone and Tablet are tied and both ranked 2nd, but Headphone gets rank 4 (skipping rank 3).
+- DenseRank: No gaps. Laptop is 1st, Phone and Tablet are tied for 2nd, and Headphone is 3rd.
+- RowNum: Each product gets a unique row number, even though Phone and Tablet have the same sales.
+

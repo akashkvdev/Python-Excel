@@ -1,0 +1,63 @@
+SELECT * FROM patients.patients;
+CREATE TABLE patients (
+ patient_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    date DATE,
+    time TIME,
+    agent_name VARCHAR(100),
+    address VARCHAR(255),
+    registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    op VARCHAR(20),
+    ip VARCHAR(20),
+    department VARCHAR(50),
+    type VARCHAR(20)
+);
+
+
+
+INSERT INTO patients (name, date, time, agent_name, address, op, ip, department, type) VALUES
+('Ravi Mehta', '2024-11-01', '09:00:00', 'Agent A', '1234 Bandra, Mumbai', 'OP20240001', NULL, 'Cardiology', 'BSKY'),
+('Sanjana Nair', '2024-11-02', '10:15:00', 'Agent B', '2345 Malad, Mumbai', 'OP20240002', NULL, 'Neurology', 'Cash'),
+('Arjun Singh', '2024-11-03', '11:30:00', 'Agent C', '3456 Andheri, Mumbai', NULL, 'IP20240001', 'Orthopedics', 'Insurance'),
+('Priya Sharma', '2024-11-04', '12:45:00', 'Agent D', '4567 Borivali, Mumbai', 'OP20240003', NULL, 'Pediatrics', 'Cash'),
+('Meera Joshi', '2024-11-05', '09:30:00', 'Agent A', '5678 Kalyan, Mumbai', NULL, 'IP20240002', 'Emergency', 'BSKY'),
+('Rohan Verma', '2024-11-06', '10:00:00', 'Agent B', '6789 Thane, Mumbai', 'OP20240004', NULL, 'Dermatology', 'Cash'),
+('Ananya Gupta', '2024-11-07', '11:15:00', 'Agent C', '7890 Dadar, Mumbai', NULL, 'IP20240003', 'General Medicine', 'Insurance'),
+('Aarav Bansal', '2024-11-08', '12:30:00', 'Agent D', '8901 Juhu, Mumbai', 'OP20240005', NULL, 'Gynecology', 'Cash'),
+('Sneha Reddy', '2024-11-09', '13:45:00', 'Agent A', '9012 Marine Lines, Mumbai', NULL, 'IP20240004', 'Cardiology', 'BSKY'),
+('Vikram Singh', '2024-11-10', '09:00:00', 'Agent B', '1011 Ghatkopar, Mumbai', 'OP20240006', NULL, 'Urology', 'Cash'),
+('Kavya Desai', '2024-11-11', '10:15:00', 'Agent C', '1112 Powai, Mumbai', NULL, 'IP20240005', 'Neurology', 'Insurance'),
+('Nisha Agarwal', '2024-11-12', '11:30:00', 'Agent D', '1213 Khar, Mumbai', 'OP20240007', NULL, 'Pediatrics', 'Cash'),
+('Tanmay Jain', '2024-11-13', '12:45:00', 'Agent A', '1314 Kalyan, Mumbai', NULL, 'IP20240006', 'Dermatology', 'BSKY'),
+('Siddhi Patil', '2024-11-14', '09:30:00', 'Agent B', '1415 Malabar Hill, Mumbai', 'OP20240008', NULL, 'Emergency', 'Cash'),
+('Jayesh Bansal', '2024-11-15', '14:00:00', 'Agent C', '1516 Borivali, Mumbai', NULL, 'IP20240007', 'General Medicine', 'Insurance'),
+('Tanisha Reddy', '2024-11-16', '09:30:00', 'Agent D', '1617 Dadar, Mumbai', 'OP20240009', NULL, 'Gynecology', 'BSKY'),
+('Ritvik Sharma', '2024-11-17', '10:00:00', 'Agent A', '1718 Andheri, Mumbai', NULL, 'IP20240008', 'Cardiology', 'Cash'),
+('Swati Verma', '2024-11-18', '11:15:00', 'Agent B', '1819 Juhu, Mumbai', 'OP20240010', NULL, 'Urology', 'Insurance'),
+('Kartik Singh', '2024-11-19', '12:30:00', 'Agent C', '1920 Marine Lines, Mumbai', NULL, 'IP20240009', 'Neurology', 'Cash'),
+('Neelam Joshi', '2024-11-20', '13:45:00', 'Agent D', '2021 Kalyan, Mumbai', 'OP20240011', NULL, 'Pediatrics', 'BSKY'),
+('Vishal Gupta', '2024-11-21', '09:00:00', 'Agent A', '2122 Borivali, Mumbai', NULL, 'IP20240010', 'Dermatology', 'Cash'),
+('Siddhi Patil', '2024-11-22', '10:15:00', 'Agent B', '2223 Thane, Mumbai', 'OP20240012', NULL, 'Emergency', 'Insurance'),
+('Shubham Reddy', '2024-11-23', '11:30:00', 'Agent C', '2324 Powai, Mumbai', NULL, 'IP20240011', 'General Medicine', 'BSKY'),
+('Vaishali Mehta', '2024-11-24', '12:45:00', 'Agent D', '2425 Malabar Hill, Mumbai', 'OP20240013', NULL, 'Gynecology', 'Cash'),
+('Ishaan Iyer', '2024-11-25', '14:00:00', 'Agent A', '2526 Juhu, Mumbai', NULL, 'IP20240012', 'Cardiology', 'Insurance'),
+('Diya Gupta', '2024-11-26', '09:30:00', 'Agent B', '2627 Bandra, Mumbai', 'OP20240014', NULL, 'Urology', 'BSKY'),
+('Aashvi Joshi', '2024-11-27', '10:00:00', 'Agent C', '2728 Marine Drive, Mumbai', NULL, 'IP20240013', 'Neurology', 'Cash'),
+('Riya Nair', '2024-11-28', '11:15:00', 'Agent D', '2829 Andheri, Mumbai', 'OP20240015', NULL, 'Pediatrics', 'Insurance'),
+('Shreya Agarwal', '2024-11-29', '12:30:00', 'Agent A', '2930 Khar, Mumbai', NULL, 'IP20240014', 'Dermatology', 'BSKY'),
+('Ayush Yadav', '2024-11-30', '13:45:00', 'Agent B', '3031 Malad, Mumbai', 'OP20240016', NULL, 'Emergency', 'Cash'),
+('Navya Singh', '2024-12-01', '09:00:00', 'Agent C', '3132 Kalyan, Mumbai', NULL, 'IP20240015', 'General Medicine', 'Insurance'),
+('Anish Sharma', '2024-12-02', '10:15:00', 'Agent D', '3233 Thane, Mumbai', 'OP20240017', NULL, 'Gynecology', 'BSKY'),
+('Siddharth Patel', '2024-12-03', '11:30:00', 'Agent A', '3334 Borivali, Mumbai', NULL, 'IP20240016', 'Cardiology', 'Cash'),
+('Rashmi Joshi', '2024-12-04', '12:45:00', 'Agent B', '3435 Powai, Mumbai', 'OP20240018', NULL, 'Urology', 'Insurance'),
+('Mohit Verma', '2024-12-05', '14:00:00', 'Agent C', '3536 Kalyan, Mumbai', NULL, 'IP20240017', 'Neurology', 'BSKY'),
+('Ishika Desai', '2024-12-06', '09:00:00', 'Agent D', '3637 Malad, Mumbai', 'OP20240019', NULL, 'Pediatrics', 'Cash'),
+('Kunal Iyer', '2024-12-07', '10:15:00', 'Agent A', '3738 Dadar, Mumbai', NULL, 'IP20240018', 'Dermatology', 'Insurance'),
+('Naman Gupta', '2024-12-08', '11:30:00', 'Agent B', '3839 Andheri, Mumbai', 'OP20240020', NULL, 'Emergency', 'BSKY'),
+('Prisha Nair', '2024-12-09', '12:45:00', 'Agent C', '3940 Kalyan, Mumbai', NULL, 'IP20240019', 'General Medicine', 'Cash'),
+('Tanmay Jain', '2024-12-10', '14:00:00', 'Agent D', '4041 Powai, Mumbai', 'OP20240021', NULL, 'Gynecology', 'Insurance');
+
+
+
+
+pip install Flask pandas openpyxl mysql-connector-python
